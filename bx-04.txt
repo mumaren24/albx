@@ -1,0 +1,174 @@
+post和get是指：页面提交的两种方式
+get：参数都体现在url上，可以用于翻页，简单查询，get只能接收2M以下的内容，所以有局限性，另外由于内容是可见的，安全性就下降了，
+post：用于页面表单 提交，上传文件，这些操作。大小没有限制，也不会在地址栏上显示。
+
+
+
+有一个方法
+mysqli_insert_id()  可以返回你刚刚添加的那个数据 的 id
+
+attr()当该方法用于返回属性值，则返回第一个匹配元素的值,当该方法用于设置属性值，则为匹配元素设置一个或多个属性/值对。
+
+1.查询 返回的是结果集 需要转化成二维数组 
+  所以用我们封装的 query方法
+2.增加 删除 修改（编辑 更新） 
+  返回的 直接就是 true 成功或者false 失败 
+  所以直接使用原来的 mysqli_query($connect,$addSql);
+
+update 表 set 键1=值1,键2=值2.... where  id=7
+
+implode() 函数返回一个由数组元素组合成的字符串。
+js的语法
+[4,5,6].join('---') 以---分割数组变成字符串
+'1,2,3'.split(',') 以，拆分 字符串变成数组
+
+php的语法
+explode("---",字符串) 以---字符串变成数组
+implode(",",$keys);//implode(",",$keys) 以逗号 拆分数组 变成一个字符串
+
+
+
+// print_r($_POST);//数组
+$keys=array_keys($_POST);//array_keys(数组) 返回一个 数组的 键 组成的新数组
+// print_r($keys);//[name slug classname]
+//implode(",",$keys) 以逗号 拆分数组 变成一个字符串
+$keyStr=implode(",",$keys);
+// echo $keyStr;//name,slug,classname
+$values=array_values($_POST);//array_keys(数组) 返回一个 数组的 值 组成的新数组
+// print_r($values);
+$valueStr=implode("','",$values);//以 ',' 拆分
+
+
+
+编辑 更新 修改 都是一个意思
+// $(this)  点谁 就是谁  这里是 编辑那个a  parent() 父亲  parents('tr') 祖先 tr
+                //  a      祖先tr         孩子   索引1的孩子 的值  
+        var name=$(this).parents('tr').children().eq(1).text();
+
+.prev() 上一个哥哥
+.next()  下一个
+sibling() 除了自己之后的兄弟
+
+如果 页面上有的元素 直接绑定事件
+
+如果是动态生成的 一定 父级元素.on(事件，点击的谁 ,function(){})
+
+
+
+编辑完成
+
+1.在ajax生成tr的时候 给 编辑a标签 加上 自定义属性 存id
+    data-categoryid="${val.id}"
+2 ，点击编辑按钮  把这个id获取出来 转存到 编辑完成按钮上面
+   
+        var categoryid=$(this).attr("data-categoryid");
+   
+        $("#btn-edit").attr("data-categoryid",categoryid);
+
+3. 点击  编辑完成 按钮  获取刚刚存的那个id
+
+var categoryid=$(this).attr("data-categoryid");
+
+在函数内部使用 var 声明的变量是局部变量 只能当前函数里面使用
+1.点击 编辑 的时候 记住 刚刚点击的那一行
+  nowTr=$(this).parents('tr');
+2 把表单的值 填写到 对应的表格里面
+// 清空表单 显示添加按钮 隐藏 编辑完成与取消编辑
+
+row.remove();//自杀
+
+
+当在两个函数以上使用了 this 就思考一秒钟 打印 看看是不是你想的
+
+只要 后面要用的 就提前 存起来 、
+1 可以存在标签的 自定义属性
+2 localStorage
+
+单选框 复选框
+选中  checked  true选中 false 不选中
+
+下拉框
+选中 selected  true选中 false 不选中
+
+禁用
+disabled  true 禁用  false不禁用
+
+这三个属性 attr("checked") 是不生效的
+
+jq里面 专门使用
+checked selected disabled 
+因为他们的值 是true或者false
+所以专门 jq 封装了 prop("checked")
+
+其他都是用attr
+
+
+// cks.size() size 个数  有多少个 类似 length  
+$("tbody input:checked") :checked选中的框
+
+
+批量删除
+
+
+delete from categories where id in (7,8) 
+删除 id  是 7 或者 8的数据
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

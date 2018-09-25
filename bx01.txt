@@ -1,0 +1,339 @@
+SELECT*FROM categories WHERE id!=1
+
+SELECT c.author,c.created,c.content
+FROM  comments c
+ORDER BY c.created DESC
+LIMIT  0,10
+
+SELECT COUNT(*) FROM comments WHERE post_id=3
+
+
+
+
+
+
+
+
+
+查询 返回结果集 要转化成二维数组
+
+增加 删除 修改 返回的直接就是true 或者false
+
+有空 可以把 随机推荐 与最新评论 写一下
+
+
+配置  www.bx.cn 去访问bx这个文件夹里面
+1 打开其他选项菜单-》打开站点域名-》新增一个 www.bx.cn 对应目录 WWW/bx
+2 vhost-ini 里面options 后面加上 Indexes
+3 打开host 文件  添加
+   127.0.0.1 www.bx.cn
+    127.0.0.1 bx.cn
+
+
+阿里百秀
+
+bx
+  admin    所有的管理页面都在里面
+  public   公共的文件写在这里面
+  static   
+    assets  所有的css js都在这里面
+    uploads 上传的文件放到这
+  detail.php  详情页面
+  index.php   前台首页
+  list.php    列表页面
+
+
+前台页面打开地址
+localhost/bx/index.php
+
+后台页面打开
+localhost/bx/admin/xx.php  xx.php是里面的文件名字
+比如login页面
+localhost/bx/admin/login.php 
+
+
+项目流程
+1.产品经理 （提出要求） 做原型图
+2 ui 根据要求 会设计 出 psd ps文件
+
+3 前端   根据ui 使用代码写出页面 根据要求 写出效果
+
+4 后台 发送ajax去给后台获取数据
+
+require 引入文件 可以引入多次 出现错误就报错
+require_once 引入文件 一次 出现错误就报错
+include    引入文件 多次 出现错误不影响后面代码
+include_once 引入文件 一次 出现错误不影响后面代码
+
+require 严格会报错 include不会影响代码   once就是一次
+引入相当于把 文件的内容 复制一份 放到引入的那个地方
+
+好处？
+1. 重复的代码只需要写一次 其他地方引入
+2  只需要修改公共的地方 就全部都被修改了
+
+
+1.把左边右边部分 写到公共文件
+2 index.php list.php detail.php 都引入
+
+新建一个db_baixiu数据库
+
+ 1.右键 运行sql  
+  选择 tables.sql 运行
+  再选 comments.sql 
+  再选 posts.sql
+
+categories 分类数据
+comments   评论数据
+options  网站设置 不用
+posts  所有文章数据 
+users  用户表
+
+
+
+1. 连接数据库
+2  准备sql语句
+3  执行sql语句
+4  得到结果使用
+
+1.查询数据库 显示 所有分类 
+  1.1 新建config.php   
+	define("DB_HOST","localhost");//主机
+	define("DB_USER","root");//用户名
+	define("DB_PWD","root");//密码
+	define("DB_NAME","db_baixiu");//数据库名字
+
+  1.2 在index.php 先引入config.php
+     <?php  require_once 'config.php';//要使用 先引入  ?>
+
+  1.3 在_header.php 使用
+
+查询 返回的是结果集 还需要使用 while循环变成二维数组
+$result=mysqli_query($connect,$sql);//查询 返回的是结果集对象 他里面有一行一行的数据
+// print_r($result);
+// 把结果集里面的 一行一行 拿出来 存到大数组里面
+// mysqli_fetch_assoc($result) 取出一行一行的数据
+$arr=[];
+while($row=mysqli_fetch_assoc($result)){//取出一行一行的数据
+    // print_r($row);//一行一行的数据 是一个小数组
+    $arr[]=$row;//把 小数组 放到大数组里面
+
+循环
+foreach($arr as $value){
+
+}
+
+foreach($arr as $value):
+
+endforeach
+
+if(){
+}
+
+if():
+
+endif
+
+while(){
+}
+
+while():
+
+endwhile
+
+
+
+mysql 过时了
+mysqli
+
+c.`name` 
+c.name  是一样 可写可不写
+
+
+limit 0,5 从0索引开始 取5条
+
+select p.id,p.title,p.feature,p.created,p.content,p.views,p.likes,c.name,u.nickname
+,(select count(*) from comments where post_id=p.id) as commentsCount 统计评论的条数
+from posts p  取一个小名 p 本质上 是写了 posts as p  as可以省略
+
+left join categories c on p.category_id=c.id 连接上categories  on 条件
+left join users u on p.user_id=u.id     连接上users on 条件
+where p.category_id!=1              
+order by p.created desc     排序 desc 降序 从大到小  asc升序 从小到大
+limit 0,5                   从0索引开始 取5条 
+
+
+如果三个存在其中任何两个以上  where  order by  limit  那么顺序是一定先 where 再order by 再limit
+where p.category_id!=1              
+order by p.created desc     
+limit 0,5                 
+
+
+count(*) 统计有多少条
+max 最大
+min  最小
+
+posts p  取一个小名 p 本质上 是写了 posts as p  as可以省略
+
+get请求 a href 跳转  直接浏览器地址栏能看见的  form表单method=get
+
+post   form表单method=post  ajax主动写post
+
+php语法
+get使用 $_GET  post $_POST  文件上传 $_FILES
+
+
+
+
+2 分类
+ 2.1 在_header.php 加上分类id 把a连接修改成
+   <a href="list.php?categoryId=<?php echo $value['id'] ?>">
+ 2.2 跳转到 list.php页面
+     1.获取对应的分类id
+
+php  双引号里面 可以直接写变量 不过最好用{$categoryId} 包裹起来
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+、解决跨域
+1.在后端php java Python 设置一个header 允许跨域
+
+2 使用jsonp
+
+jsonp 前端创建一个script标签 设置src请求对应的地址 把一个函数名字传到后台
+
+后台要返回你的那个 函数() 这种样式
+
+ajax 创建xhr对象 5个步骤  jsonp创建一个script标签
+
+平时肯定ajax 该怎么发就怎么发  如果跨域了 才考虑用jsonp
+
+使用formdata上传文件 
+
+post 平时发送post必须设置请求头  
+
+但是 如果ajax上传文件 那么就不需要
+
+var data=new FormData(原生的表单元素)  data里面就有表单的所有东西 包含文件
+
+后台接收文件  $_FILES
+// print_r($_FILES);
+// Array
+// (   myfile是表单里面name属性对应的名字
+//     [myfile] => Array
+//         (
+//             [name] => banner300.jpg 文件名字
+//             [type] => image/jpeg  类型
+//             [tmp_name] => C:\Windows\php69A5.tmp  临时文件
+//             [error] => 0 0代表成功
+//             [size] => 46328 文件大小
+//         )
+// )
+
+move_uploaded_file(临时文件,要上传到的文件夹+文件名字)
+
+文件夹里面如果有 index开头文件 name 会默认打开
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,146 @@
+1.完成添加文章
+
+2 查看下面网站 预习一下mui框架
+http://dev.dcloud.net.cn/mui/ui/
+http://www.dcloud.io/hellomui/
+
+3 重新 使用模板引擎 渲染一下评论页面
+
+
+where 1=1 and p.status='publised'  and p.category_id='2'
+
+where 1=1 相当于没写 查询的是所有的、
+
+
+post-add.php 写文章 文章添加页面
+
+ajax上传文件  原生
+
+1.new xhr
+2 xhr.open("post",..)
+3 设置请求头 上传文件不需要 
+  
+ new FormData(表单数据)
+
+4 xhr.send(  )
+
+php $_FILES 专门获取上传的文件
+// Array
+// (
+//     [abc] => Array
+//         (
+//             [name] => banner300.jpg 文件名字
+//             [type] => image/jpeg 类型
+//             [tmp_name] => C:\Windows\phpBEA.tmp 临时文件
+//             [error] => 0  0代表成功
+//             [size] => 46328 大小
+//         )
+// )
+
+
+
+1 var file=this.files[0];//要上传的那个文件 原生才有
+        // this 原生 $(this) 转化成jq对象了
+        // console.log(file)
+
+
+2 jq的ajax来写  本质上 也是我们前面的原生的步骤 他给我们封装了而已
+
+// formdata.append(名字,值) 追加一个 参数
+        formdata.append("abc",file);//追加一个 参数 abc 值是 要上传的文件对象
+
+3  new FileReader 预览   只是给你预先看一下图片 还没有实现真正的上传
+
+4  只有真正的发送图片到服务器 上传 才是真的上传
+
+ // 选择文件上传  原生的 onchange 事件  文件选中会触发  下拉框选择 也会触发
+
+
+5 富文本 非常丰富的文本 类似word文档的功能
+
+  国外的CKEDITOR  
+  百度的 ueditor 地址 https://ueditor.baidu.com/website/
+步骤：
+1. 引入对应js
+2 准备一个 文本域 textarea 给一个id
+3 调用方法 CKEDITOR.replace("文本域textarea 的id");
+
+6 发送ajax之前一定要更新内容
+
+// 文本域被隐藏 上面覆盖了一层div 我们修改的值 其实在div里面 所以文本域本身就没有值
+// 所以要想有值 我们需要把div里面的内容 放到 文本域里面去
+// CKEDITOR.instances.文本域的id.updateElement()
+CKEDITOR.instances.content.updateElement();
+
+
+7 contenteditable="true" 可以让标签可以编辑内容
+
+<div contenteditable="true" class="box">
+
+</div>
+
+评论页面
+
+comments.php
+
+approved 批准
+held 驳回
+
+bootstrap  特有的 类名
+btn-primary 深蓝色
+btn-info  浅蓝色
+btn-warning 黄色
+btn-danger 红色
+btn-success  绿色
+
+btn-xs 小按钮
+
+btn-md sm lg
+
+
+8 分页插件 
+https://blog.csdn.net/panying0903/article/details/41276809
+ 1.引入对应js
+ 2 准备一个ul或者div  写样式
+ 3 直接调用对应方法
+  $('元素').twbsPagination({
+	totalPages: totalPages,
+	visiblePages: 5,
+	first: "首页",
+	prev: "上一页",
+	next: "下一页",
+	last: "未页",
+	href: "#",
+	onPageClick: function (event, page) {
+		
+	}
+});
+ 因为我们的总页数 是ajax 发送成功 返回之后才有 
+所以一定要在成功之后才有51这个值 一定要写成功后面
+
+9 模板引擎
+
+1.引入template-web.js 这个两个都支持
+2.写模板
+value 是数组的每一项 index 是索引
+ <script type="text/template" id="模板id">
+     {{each 数组 as value index}}
+        循环的tr
+     {{/each}}
+  </script>
+
+3.使用template("模板id'",数据对象) 对象直接用 是数组 要转化成对象 传进去
+var html=template("模板id'",数据对象)  html 拼接好的字符串
+
+4  把html 字符串 追加到页面上
+
+
+
+
+
+
+
+
+
+
+

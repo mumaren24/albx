@@ -1,0 +1,163 @@
+ //自己尝试 insert into 把分类插入到数据库
+
+1.插入方法
+  insert into categories values(null,'bagua','明星八卦','fa-fire')
+2 还可以这样写
+insert into categories(name,slug,classname) values('明星八卦','bagua','fa-xx')
+
+
+
+
+
+
+1.混合开发  直接使用php查询数据库 foreach 循环生成的 (不常用)
+
+2. 前后端分离（前端只发ajax 写js）  （后台php 值查询操作数据库 返回给你数据）
+
+   前端写js 发送ajax （以后基本就是 发送ajax）   
+
+   后台php 返回给你结果数据
+
+结构非常清晰 前端只需要写前端js  后端自己写php
+
+写html js效果 发送ajax获取一些数据
+
+
+
+session  cookie 的作用 可以在一个页面存上值 在其他所有页面都可以取出来用
+存
+session_start(); 一定要开启
+$_SESSION[名字]=值
+
+取
+$_SESSION[名字] 
+
+cookie
+存
+setcookie(名字,值)
+取
+$_COOKIE[名字] 
+
+要求：必须先登录了 才可以打开其他页面 比如首页
+
+
+判断是否登录
+1.登录成功 在_userLogin.php写
+  // 成功了 session存一个 isLogin=1 代表登录了
+    session_start();//开启session
+    $_SESSION['isLogin']=1;
+2 在index.php 判断 $_SESSION['isLogin']是否等于1
+
+
+
+1 在admin下面 新建public文件夹 
+2 里面写好公共右上_navbar.php 左边_aside.php
+
+in_array(值,数组) 判断数组里面有没有这个值有true
+
+3 这几个页面 都需要引入公共部分 右上_navbar.php 左边_aside.php
+index.php 首页
+文章菜单
+ 所有文章 posts.php 页面
+ 写文章  post-add.php 
+ 分类页面 categories.php
+
+点击这几个页面 都需要展开 文章这个菜单
+需要展开 就加上 对应的类名 和样式
+1,在aside.php里面 判断是否展开 
+   1.1 $bool为true 展开的话加上对应的样式  1.2 不展开也有对应的样式
+2 
+  首页 index.php  $current_page="index" 不需要展开 所以只要单词不是数组的那三个即可
+  所有文章 posts.php 页面 需要展开 $current_page="posts"
+ 写文章  post-add.php  $current_page="post-add"
+ 分类页面 categories.php $current_page="categories"
+
+
+
+
+
+1.在_aside.php 左侧公共部分
+ 最下面 发送ajax 获取用户名和头像
+
+2 在admin/api/ 新建_getUserAvator.php 
+  通过用户id 查询数据库 返回用户名和头像
+
+
+获取用户名和头像
+发送ajax   去数据库查询出来 一般需要用id去查
+
+
+categories.php 分类页面 
+
+1. 当打开分类页面的时候 发送ajax获取所有分类
+
+2 点击添加 
+获取填写的数据 
+判断是否为空 
+发送ajax到后台 
+insert插入到数据库
+
+
+
+ajax的传参数
+
+1.{name:name,slug:slug....} 对象方式
+2 使用jq的 $("表单").serialize() 会自动给你拼接好
+3 new FormData 原生js
+
+
+
+
+
+
+<button class="btn btn-primary" id="btn-add" type="submit">添加</button>
+<input type="button" value="添加">
+
+ type="submit" 是提交按钮会提交
+ type="button" 普通按钮 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
